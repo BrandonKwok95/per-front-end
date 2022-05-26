@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<canvas id="canvas1" width="600" height="600">
+</canvas>
+<script type="text/javascript">
+  const canvas = document.querySelector("#canvas1")
+  const ctx = canvas.getContext('2d')
+  console.log(ctx)
+  // ctx.acr 画圆
+  // x: number, x轴圆心位置
+  // y: number, y轴圆心位置
+  // radius: number,  圆半径
+  // startAngle: number,  起始角度
+  // endAngle: number,  最终角度
+  // counterclockwise?: boolean): void  顺时针/逆时针
+  ctx.arc(300, 300, 100, 0, Math.PI)
+  ctx.strokeStyle = 'black'
+  ctx.lineWidth = 10
+  ctx.stroke()
+  ctx.fillStyle = 'pink'
+  ctx.fill()
+
+  ctx.font = '50px 微软雅黑' // 文本样式
+  ctx.shadowBlur = 20 // 阴影模糊度
+  ctx.shadowColor = 'rgba(0, 0, 0, 1)' // 阴影颜色
+  ctx.shadowOffsetX = 10  // 阴影偏移
+  ctx.shadowOffsetY = 10  // 阴影偏移
+  let positionX = 600
+  // 滚动效果
+  setInterval(function () {
+    ctx.clearRect(0, 0, 600, 300) //
+    positionX -= 10
+    ctx.fillText("hello world", positionX ,50) // 填充文本
+    ctx.strokeText("hello world", positionX, 200)  // 描边文本
+    if (positionX < 0) {
+      positionX = 600
+    }
+  }, 1000 / 60)
+
+</script>
+</body>
+</html>

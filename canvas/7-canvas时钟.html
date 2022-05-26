@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>canvas应用-时钟</title>
+</head>
+<body>
+<div class="canvas-wrapper">
+<canvas id="canvas1" class="canvas-inner" width="800" height="800"></canvas>
+</div>
+<script>
+  class chart {
+    constructor(height, width) {
+      this.x0 = height / 2 + 5  // 5为偏移量
+      this.y0 = width / 2 + 5 // 5为偏移量
+      this.radius = width / 2 // 半径默认为宽度的一半（时分秒针长度，分别递减20）
+      this.ctx = this.init()
+    }
+
+    init() {
+      const canvas1 = document.querySelector("#canvas1")
+      return canvas1.getContext('2d')
+    }
+    /* 绘制表盘 */
+    drawWatch() {
+      // 填充颜色
+      this.ctx.beginPath()
+      this.ctx.rect(0, 0, 800, 600)
+      this.ctx.fillStyle = 'white'
+      this.ctx.fill()
+      this.ctx.closePath()
+      // 绘制表盘
+      this.ctx.beginPath()
+      this.ctx.arc(this.x0, this.y0, this.radius + 10, 0, 2 * Math.PI)
+      this.ctx.fill();
+      this.ctx.closePath()
+      this.ctx.lineCap = 'round'
+      this.ctx.strokeStyle = 'white'
+      this.ctx.stroke()
+      this.ctx.closePath()
+    }
+    /* 绘制刻度 */
+    drawTickAndText() {
+      const tickDegree = 2 * Math.PI / 60
+      this.ctx.strokeStyle = 'black'
+
+      for (let i = 0; i < 60; i++) {
+        const outer = this.radius // 外环半径
+        let inner = this.radius
+        if (i % 5 === 0) {
+          inner = this.radius - 20
+        } else {
+          inner = this.radius - 10
+        }
+        this.ctx.beginPath()
+        this.ctx.moveTo(...this.calcPoint(inner, i * tickDegree - Math.PI / 2))
+        this.ctx.lineTo(...this.calcPoint(outer, i * tickDegree - Math.PI / 2))
+        this.ctx.lineWidth = 2
+        this.ctx.stroke()
+        if (i % 5 === 0) {
+          this.ctx.font = '30px Arial'
+          const [positionX, positionY] = this.calcPoint(inner - 25, i * tickDegree - Math.PI / 2)
+          let num = i / 5
+          if (num === 0) num = 12
+          this.ctx.lineWidth = 8
+          this.ctx.fillStyle = 'black'
+          this.ctx.fillText(num, positionX - 10, positionY + 10)
+          this.ctx.stroke()
+        }
+
+      }
+    }
+    /* 绘制数字 */
+    // drawText() { }
+    /* 绘制时针 */
+    drawLineByNewLine() {
+      // 获取当前时间
+      const date = new Date()
+      let millSec = date.getMilliseconds(),
+        sec = date.getSeconds(),
+        min = date.getMinutes(),
+        hour = date.getHours();
+      // 获取时分秒角度
+      let secDegree = 2 * Math.PI / 60,
+        minDegree = 2 * Math.PI / 60,
+        hourDegree = 2 * Math.PI / 12;
+      let sDeg = (sec + millSec / 1000) * secDegree - Math.PI / 2,
+        mDeg = min * minDegree - Math.PI / 2,
+        hDeg = (hour + min / 60) * hourDegree - Math.PI / 2
+      // 秒针计算
+      this.ctx.beginPath()
+      this.ctx.moveTo(this.x0, this.y0)
+      this.ctx.lineTo(...this.calcPoint(this.radius - 50, sDeg))
+      this.ctx.strokeStyle = '#e9686b'
+      this.ctx.lineWidth = 6
+      this.ctx.stroke()
+      // 分针计算
+      this.ctx.beginPath()
+      this.ctx.moveTo(this.x0, this.y0)
+      this.ctx.lineTo(...this.calcPoint(this.radius - 80, mDeg))
+      this.ctx.strokeStyle = '#3072B6'
+      this.ctx.lineWidth = 8
+      this.ctx.stroke()
+      // 时针计算
+      this.ctx.beginPath()
+      this.ctx.moveTo(this.x0, this.y0)
+      this.ctx.lineTo(...this.calcPoint(this.radius - 100, hDeg))
+      this.ctx.strokeStyle = '#293666'
+      this.ctx.lineWidth = 10
+      this.ctx.stroke()
+    }
+
+    drawLineByRotate() {
+      const date = new Date()
+      let millSec = date.getMilliseconds(),
+        sec = date.getSeconds() + millSec / 1000,
+        min = date.getMinutes() + sec / 60,
+        hour = date.getHours() + min / 60;
+      // 获取时分秒角度
+      let secDegree = 2 * Math.PI / 60,
+        minDegree = 2 * Math.PI / 60,
+        hourDegree = 2 * Math.PI / 12;
+      this.ctx.restore()
+      this.ctx.save()
+      // 秒针计算
+      this.ctx.translate(this.x0, this.y0)
+      this.ctx.rotate(sec * secDegree)
+      this.ctx.beginPath()
+      this.ctx.moveTo(0, 0)
+      this.ctx.lineTo(0, - this.radius + 50)
+      this.ctx.strokeStyle = '#e9686b'
+      this.ctx.lineWidth = 6
+      this.ctx.stroke()
+      this.ctx.closePath()
+      this.ctx.restore()
+      this.ctx.save()
+      //  分针
+      this.ctx.translate(this.x0, this.y0)
+      this.ctx.rotate(min * minDegree)
+      this.ctx.beginPath()
+      this.ctx.moveTo(0, 0)
+      this.ctx.lineTo(0, - this.radius + 80)
+      this.ctx.strokeStyle = '#3072B6'
+      this.ctx.lineWidth = 8
+      this.ctx.stroke()
+      this.ctx.closePath()
+      this.ctx.restore()
+      this.ctx.save()
+      // 时针
+      this.ctx.translate(this.x0, this.y0)
+      this.ctx.rotate(hour * hourDegree)
+      this.ctx.beginPath()
+      this.ctx.moveTo(0, 0)
+      this.ctx.lineTo(0, - this.radius + 100)
+      this.ctx.strokeStyle = '#293666'
+      this.ctx.lineWidth = 10
+      this.ctx.stroke()
+      this.ctx.closePath()
+      this.ctx.restore()
+      this.ctx.save()
+    }
+
+    calcPoint(distance, angle) {
+      return [
+        this.x0 + distance * Math.cos(angle),
+        this.y0 + distance * Math.sin(angle)
+      ]
+    }
+
+    clear() {
+      this.ctx.clearRect(0, 0, 800, 800)
+    }
+  }
+
+  const height = 400, width = 400;
+  const watcher = new chart(height, width)
+  setInterval(() => {
+    watcher.clear()
+    watcher.drawWatch()
+    watcher.drawLineByNewLine() // 通过重新绘制直线
+    // watcher.drawLineByRotate()  // 通过旋转直线
+    watcher.drawTickAndText()
+  }, 16)
+
+</script>
+</body>
+</html>

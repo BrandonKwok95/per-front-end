@@ -1,0 +1,5 @@
+const a = require('./a')
+require('./index.css')
+require('./a.less')
+console.log('hello world')
+console.log('goodbye world')

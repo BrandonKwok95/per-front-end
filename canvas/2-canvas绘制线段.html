@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<canvas id="canvas1" width="600" height="600">
+</canvas>
+<script type="text/javascript">
+  const canvas = document.querySelector("#canvas1")
+  const ctx = canvas.getContext('2d')
+  console.log(ctx)
+  ctx.beginPath() // 设置路径起点（假如不设置，绘制多条线段时会自动连接起来）
+  ctx.moveTo(50, 50)  // 设置起点
+  // 绘制线段经过的具体点
+  ctx.lineTo(400, 400)  // 经过某个位置
+  ctx.lineTo(50, 400) // 折线的绘制
+  ctx.lineTo(400, 50)
+  ctx.closePath() // 设置路径终点（自动连接终点）
+  // 线段颜色
+  ctx.strokeStyle = 'pink'
+  ctx.lineWidth = 10
+  ctx.lineCap = 'round' // 设置点两端点的样式 square round butt
+  ctx.lineJoin = 'round'  // 点连接处的样式
+  ctx.miterLimit = 2  // 点连接处为butt样式时，裁剪斜切角的长度（单位为等级，只有三个等级1，2，3）
+  ctx.stroke()
+</script>
+</body>
+</html>

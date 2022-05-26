@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<canvas id="canvas1" width="400" height="600">
+</canvas>
+<video width="400" height="400" src="./test.mp4" controls="controls" autoplay="true" loop></video>
+<script type="text/javascript">
+  const canvas = document.querySelector("#canvas1")
+  const video = document.querySelector("video")
+  const ctx = canvas.getContext('2d')
+  let positionX = 0,
+    positionY = 10,
+    changeValue = 2,
+    directionX = 1,
+    directionY = 1
+  let timer = null
+  video.onplay = function () {
+    timer = setInterval(function() {
+      ctx.clearRect(0, 0, 600, 600)
+      ctx.fillRect(0, 0, 600, 600)
+      ctx.drawImage(video, 0, 300, 400, 300)
+      ctx.font = '30px Arial'
+      ctx.strokeStyle = '#3072F6'
+      if (positionX > 400 ) directionX = -1
+      if (positionX < 0) directionX = 1
+      if (positionY > 600) directionY = -1
+      if (positionY < 0) directionY = 1
+      positionX += directionX * changeValue
+      positionY += directionY * changeValue
+      ctx.strokeText('简单水印', positionX, positionY)
+    }, 16)
+  }
+  video.onpause = function () {
+    clearInterval(timer)
+  }
+</script>
+</body>
+</html>

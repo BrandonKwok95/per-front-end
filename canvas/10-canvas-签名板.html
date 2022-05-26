@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #draw-card {
+    }
+    .draw-card__text {
+      font-size: 20px;
+      text-align: center;
+      margin-left: -20px;
+    }
+    .draw-card__cover {
+      border: 1px solid black;
+      width: 600px;
+      height: 400px;
+    }
+  </style>
+</head>
+<body>
+<div id="draw-card">
+  <div class="draw-card__text">签名板</div>
+  <canvas id="canvas" class="draw-card__cover" width="600" height="400"></canvas>
+</div>
+<button id="btn-clear">清理</button>
+<button id="btn-download">
+  <a download="签名">下载图片</a>
+</button>
+<script>
+  const drawCard = document.querySelector('#draw-card')
+  const canvas = document.querySelector('#canvas')
+  const btnClear = document.querySelector('#btn-clear')
+  const btnDownload = document.querySelector('#btn-download a')
+  const ctx = canvas.getContext('2d')
+  // 绘制底边
+  ctx.fillStyle = 'white'
+  ctx.fillRect(0, 0, 600, 400)
+  ctx.fill()
+
+  let canDraw = false
+  drawCard.onmousemove = function (e) {
+    if (!canDraw) return
+    const { offsetX, offsetY } = e
+    ctx.lineTo(offsetX, offsetY)
+    ctx.stroke()
+  }
+  drawCard.onmouseup = function() {
+    canDraw = false
+  }
+  drawCard.onmousedown = function (e) {
+    canDraw = true
+    const { offsetX, offsetY } = e
+    ctx.lineWidth = 6
+    ctx.strokeStyle = 'black'
+    ctx.moveTo(offsetX, offsetY)
+    console.log(offsetX, offsetY)
+  }
+
+  btnClear.onclick = function() {
+    ctx.clearRect(0, 0, 600, 400)
+    ctx.beginPath()
+  }
+
+  btnDownload.onclick = function () {
+    const base64 = canvas.toDataURL('image/png')
+    btnDownload.setAttribute('href', base64)
+    console.log(btnDownload)
+  }
+
+</script>
+</body>
+</html>

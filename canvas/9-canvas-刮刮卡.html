@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #draw-card {
+      position: relative;
+    }
+    .draw-card__cover {
+      position: absolute;
+      z-index: 9;
+    }
+    .draw-card__text {
+      background: #e9686b;
+      width: 600px;
+      height: 400px;
+      font-size: 40px;
+      line-height: 400px;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+<div id="draw-card">
+  <canvas id="canvas" class="draw-card__cover" width="600" height="400"></canvas>
+  <div class="draw-card__text">中奖啦</div>
+</div>
+<script>
+  const drawCard = document.querySelector('#draw-card')
+  const canvas = document.querySelector('#canvas')
+  const prizeText = document.querySelector('.draw-card__text')
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = 'grey'
+  ctx.fillRect(0, 0, 600, 400)
+  ctx.font = '50px 微软雅黑'
+  ctx.fillStyle = 'white'
+  ctx.fillText('请刮卡', 230, 200)
+  ctx.fill()
+  let canDraw = false
+  drawCard.onmousemove = function (e) {
+    if (!canDraw) return
+    const { offsetX, offsetY } = e
+    ctx.globalCompositeOperation = 'destination-out' // 关键属性
+    ctx.beginPath()
+    ctx.arc(offsetX, offsetY, 20, 0, 2 * Math.PI)
+    ctx.fill()
+    ctx.closePath()
+  }
+  drawCard.onmouseup = function() {
+    canDraw = false
+  }
+  drawCard.onmousedown = function () {
+    canDraw = true
+  }
+
+  // 根据毫秒判断中奖
+  const date = new Date()
+  const millSec = date.getMilliseconds()
+
+  let text;
+  switch (true) {
+    case millSec < 200:
+      text = '谢谢惠顾';
+      break;
+    case millSec < 500:
+      text = 'iphone 13 PRO';
+      break;
+    default:
+      text = 'iphone 13 PRO MAX';
+      break;
+  }
+  prizeText.innerText = text
+  console.log(millSec, prizeText.innerText)
+</script>
+</body>
+</html>
