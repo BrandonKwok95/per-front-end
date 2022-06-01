@@ -11,5 +11,5 @@ img {
   width: 600px;
   height: 200px;
   background-size: contain;
-  background-image: url("./webpack.png");
+  background-image: url("webpack.png");
 }

@@ -35,16 +35,18 @@ module.exports = {
             loader: "url-loader",
             options: {
               limit: 1,
-              outputPath: '/img/' // 将文件输出到
+              outputPath: "img", // 将文件打包到指定文件夹
+              publicPath: "/img/", // 打包完请求资源的路径
             },
           },
-        ]
+        ],
       },
       // file-loader 将js中引入的文件（图片）打包
       // {
       //   test: /\.(png|jpg|gif)$/,
       //   use: "file-loader",
       // },
+
       // expose-loader 将变量注入到全局window
       // {
       //   test: require.resolve("jquery"),
@@ -59,6 +61,7 @@ module.exports = {
       //     // },
       //   ],
       // },
+
       // // eslint 负责es语法校验
       // {
       //   test: /\.js$/,
@@ -93,11 +96,7 @@ module.exports = {
       // postcss-loader 负责样式兼容之类的问题，适应厂商配置（webkit）
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
       },
       // less文件解析（解析less文件）
       {
@@ -124,9 +123,9 @@ module.exports = {
     //   $: 'jquery'
     // })
   ],
-  externals: {
-    jquery: "$",
-  },
+  // externals: {
+  //   jquery: "$",
+  // },
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
