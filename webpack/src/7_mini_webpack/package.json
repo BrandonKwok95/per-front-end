@@ -1,0 +1,23 @@
+{
+  "name": "7_mini_webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "mini-webpack": "./bin/mini-webpack.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/generator": "^7.18.2",
+    "@babel/traverse": "^7.18.2",
+    "@babel/types": "^7.18.4",
+    "babylon": "^6.18.0",
+    "ejs": "^3.1.8",
+    "tapable": "^2.2.1"
+  }
+}

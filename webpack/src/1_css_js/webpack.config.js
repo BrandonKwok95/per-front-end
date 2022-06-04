@@ -91,7 +91,7 @@ module.exports = {
         include: path.resolve(__dirname, "src"),
       },
       // loader默认从右向左执行（从上到下执行）
-      // style-loader 将css插入到head标签中
+      // style-loader.js 将css插入到head标签中
       // css-loader 负责解析相应的css文件
       // postcss-loader 负责样式兼容之类的问题，适应厂商配置（webkit）
       {
