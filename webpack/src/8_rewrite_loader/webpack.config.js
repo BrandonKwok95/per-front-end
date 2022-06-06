@@ -1,4 +1,5 @@
 const path = require("path");
+const DonePlugin = require('./plugins/DonePlugin')
 
 module.exports = {
   mode: "development", // 生产模式
@@ -44,5 +45,7 @@ module.exports = {
       }
     ],
   },
-  plugins: [],
+  plugins: [
+    new DonePlugin()
+  ],
 };
