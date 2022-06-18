@@ -1,0 +1,23 @@
+version: "3"
+services:
+  db-app:
+    container_name: db-app
+    build: ./database
+    ports:
+      - 3306:3306
+  client-app:
+    # build: 从当前路径构建镜像
+    build: ./client
+    stdin_open: true
+    tty: true
+    ports:
+      - 8888:80
+
+  server-app:
+    build: ./server
+    ports:
+      - 4000:3000
+    links:
+      - db-app:db
+    depends_on:
+      - db-app
