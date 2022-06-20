@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+  <script src="./lib/jquery.min.js"></script>
+</head>
+
+<body>
+  <div style="width: 600px; height: 400px"></div>
+  <script>
+    const myChart = echarts.init(document.querySelector('div'))
+    const dataMax = [
+      {
+        name: '易用性',
+        max: 100
+      }, {
+        name: '易用性',
+        max: 100
+      }, {
+        name: '易用性',
+        max: 100
+      }, {
+        name: '易用性',
+        max: 100
+      }, {
+        name: '易用性',
+        max: 100
+      },
+    ]
+    // 加载地图矢量数据
+    const option = {
+      radar: {
+        indicator: dataMax,
+        shape: 'circle',  // 雷达图转换为圆形
+      },
+      series: [
+        {
+          type: "radar",
+          // 展示数值标签
+          label: {
+            show: true,
+            formatter: function(arg) {
+              console.log(arg)
+              return 'hello'
+            },
+            position: 'bottom'
+          },
+          // 填充区域面积
+          areaStyle: {},
+          data: [
+            {
+              name: 'iphone 13 pro',
+              value: [100, 100, 100, 60, 60]
+            },
+            {
+              name: 'huawei p50',
+              value: [60, 60, 60, 100, 100]
+            }
+          ]
+        }
+      ]
+    }
+    myChart.setOption(option)
+  </script>
+</body>
+
+</html>

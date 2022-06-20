@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+  <script src="./lib/myTheme.js"></script>
+</head>
+<body>
+  <!-- 1. echart 盒子 -->
+  <div style="height: 400px"></div>
+  <script>
+    // 2. echart 实例对象
+    const myChart = echarts.init(document.querySelector('div'))
+    const xData = [1,2,3]
+    const yData = [70, 92, 87]
+    // 3. echart 配置项
+    const option = {
+      xAxis: {
+        type: 'category',
+        data: xData
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Chinese',
+          type: 'bar',
+          data: yData,
+          itemStyle: {
+            color: {
+              type: 'linear',
+              // 控制渐变方向
+              x: 0, // 横向渐变起点
+              y: 0, // 纵向渐变起点
+              x2: 0,
+              y2: 1,
+              colorStops: [{
+                offset: 0, color: 'red'
+              }, {
+                offset: 1, color: 'blue'
+              }],
+              globalCoord: false
+            },
+            // color: {
+            //   type: 'radial',
+            //   x: .5,
+            //   y: .5,
+            //   r: .5,
+            //   colorStops: [{
+            //     offset: 0, color: 'red'
+            //   }, {
+            //     offset: 1, color: 'green'
+            //   }]
+            // }
+          }
+        }
+      ]
+    }
+    // 4. 设置给实例对象
+    myChart.showLoading() // 加载动画配置
+    setTimeout(() => {
+      myChart.hideLoading()
+      myChart.setOption(option)
+    }, 3000)
+
+    // 根据宽度自适应布局
+    window.onresize = function() {
+      myChart.resize()
+      clearInterval(timer)
+    }
+    // 增量动画效果
+    let i = 4
+    const timer = setInterval(() => {
+      xData.push(i++)
+      yData.push(Math.random() * 100)
+      myChart.setOption(option)
+      if (timer === 10) clearInterval(timer)
+    }, 1000)
+  </script>
+</body>
+</html>

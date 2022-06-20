@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+</head>
+<body>
+<!-- 1. echart 盒子 -->
+<div style="width: 600px; height: 400px"></div>
+<script>
+  // 2. echart 实例对象
+  const myChart = echarts.init(document.querySelector('div'))
+  // 3. echart 配置想
+  const nameArr = ['Jack', 'Louis', 'Owen', 'Mark', 'Tom', 'David']
+  const valArr = [88, 89, 66, 43, 45, 77]
+  const option = {
+    // 筛选数据滑块
+    dataZoom: [
+      {
+        type: 'inside', // inside鼠标滚动控制 slide底部滑块控制
+        xAxisIndex: 0
+      },
+      {
+        type: 'slider', // 设置滑动形式
+        yAxisIndex: 0,  // 设置作用轴
+        end: 80,  // 设置作用范围
+      }
+    ],
+    toolbox: {
+      feature: {
+        dataZoom: {}
+      }
+    },
+    // 控制直角坐标系的布局
+    grid: {
+      show: false,
+      borderWidth: 10,  // 边框大小
+      borderColor: 'pink',
+      top: 100,
+      left: 100,
+      width: 300,
+      height: 200
+    },
+    xAxis: {
+      type: 'category',
+      data: nameArr,
+      position: 'top'
+    },
+    yAxis: {
+      type: 'value',
+      position: 'right'
+    },
+    series: [
+      {
+        name: 'Chinese',
+        type: 'bar',
+        data: valArr,
+        markPoint: {
+          data: [
+            {
+              type: 'max', name: '最大值'
+            }, {
+              type: 'min', name: '最小值'
+            }
+          ]
+        },
+        markLine: {
+          data: [{
+            type: 'average', name: '平均值'
+          }]
+        },
+        label: {
+          show: true,
+          rotate: 45,
+          position: 'top'
+        },
+        barWidth: '30'
+      }
+    ]
+  }
+  // 4. 设置给实例对象
+  myChart.setOption(option)
+</script>
+</body>
+</html>

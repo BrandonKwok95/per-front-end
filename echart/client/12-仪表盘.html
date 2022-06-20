@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+  <script src="./lib/jquery.min.js"></script>
+</head>
+
+<body>
+  <div style="width: 600px; height: 400px"></div>
+  <script>
+    const myChart = echarts.init(document.querySelector('div'))
+
+    // 加载地图矢量数据
+    const option = {
+      series: [
+        {
+          type: 'gauge',
+          // data每个对象代表一个指针
+          data: [{
+            value: 97,
+            itemStyle: {
+              color: 'pink'
+            }
+          }, {
+            value: 40,
+            itemStyle: {
+              color: 'green'
+            }
+          }],
+          max: 200
+        },
+      ]
+    }
+    myChart.setOption(option)
+  </script>
+</body>
+
+</html>

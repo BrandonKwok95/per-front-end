@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+</head>
+
+<body>
+  <!-- 1. echart 盒子 -->
+  <div style="width: 600px; height: 400px"></div>
+  <script>
+    // 2. echart 实例对象
+    const myChart = echarts.init(document.querySelector('div'))
+    var pieData = [
+      {
+        value: 11231,
+        name: "淘宝",
+      },
+      {
+        value: 22673,
+        name: "京东"
+      },
+      {
+        value: 6123,
+        name: "唯品会"
+      },
+      {
+        value: 8989,
+        name: "1号店"
+      },
+      {
+        value: 6700,
+        name: "聚美优品"
+      }
+    ]
+    const option = {
+      title: {
+        text: '12345'
+      },
+
+      series: [
+        {
+          type: 'pie',
+          data: pieData,
+          label: {
+            show: true,
+            formatter: function(arg) {
+              const { name = '', percent = '' } = arg
+              return `${name} ${percent}%`
+            }
+          },
+          // radius: 20  // 饼图半径
+          // radius: '50%',  // 百分比参照宽度和高度较小一半的百分比来取
+          // radius: ['50%', '75%'],  // 环形图
+          roseType: 'radius',
+          selectedMode: 'single', // 点击选中后，偏离原点
+          selectedOffset: 30
+
+        }
+      ]
+    }
+    // 4. 设置给实例对象
+    myChart.setOption(option)
+  </script>
+</body>
+
+</html>

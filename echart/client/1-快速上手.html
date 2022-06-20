@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+</head>
+<body>
+  <!-- 1. echart 盒子 -->
+  <div style="width: 600px; height: 400px"></div>
+  <script>
+    // 2. echart 实例对象
+    const myChart = echarts.init(document.querySelector('div'))
+    // 3. echart 配置想
+    const option = {
+      title: {
+        text: '12345'
+      },
+      xAxis: {
+        type: 'category',
+        data: ['诗诗', '林林', '总总']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: 'Chinese',
+          type: 'bar',
+          data: [70, 92, 87]
+        }
+      ]
+    }
+    // 4. 设置给实例对象
+    myChart.setOption(option)
+  </script>
+</body>
+</html>

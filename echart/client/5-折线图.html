@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+</head>
+<body>
+<!-- 1. echart 盒子 -->
+<div style="width: 600px; height: 400px"></div>
+<script>
+  // 2. echart 实例对象
+  const myChart = echarts.init(document.querySelector('div'))
+  // 3. echart 配置想
+  const nameArr = ['Jack', 'Louis', 'Owen', 'Mark', 'Tom', 'David']
+  const valArr = [88, 89, 66, 43, 45, 77]
+  const valArr2 = [64, 89, 50, 90, 21, 20]
+  const option = {
+    title: {
+      text: '12345'
+    },
+
+    xAxis: {
+      type: 'category',
+      data: nameArr,
+      boundaryGap: false
+    },
+    yAxis: {
+      type: 'value',
+      // scale: true
+    },
+    series: [
+      {
+        name: 'Chinese',
+        type: 'line',
+        data: valArr,
+        barWidth: '30',
+        // 标记最大最小值
+        markPoint: {
+          data: [
+            {
+              type: 'max'
+            },
+            {
+              type: 'min'
+            }
+          ]
+        },
+        // 标记平均值
+        markLine: {
+          data: [
+            {
+              type: 'average'
+            }
+          ]
+        },
+        // 标注区间
+        // markArea: {
+        //   data: [
+        //     [
+        //       {
+        //         xAxis: 'Jack'
+        //       },
+        //       {
+        //         xAxis: 'Louis'
+        //       }
+        //     ]
+        //   ]
+        // },
+        // 线条平滑效果
+        // smooth: true,
+        // 折线图线段基本效果
+        // lineStyle: {
+        //   color: 'pink',
+        //   type: 'dotted'
+        // },
+        // 线条下方范围效果
+        // areaStyle: {
+        //   color: 'blue'
+        // },
+        stack: 'all'
+      },
+      {
+        name: 'Math',
+        type: 'line',
+        data: valArr2,
+        stack: 'all'
+      }
+    ],
+  }
+  // 4. 设置给实例对象
+  myChart.setOption(option)
+</script>
+</body>
+</html>

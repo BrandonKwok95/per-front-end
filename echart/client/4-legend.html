@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./lib/echarts.min.js"></script>
+</head>
+<body>
+<!-- 1. echart 盒子 -->
+<div style="width: 600px; height: 400px"></div>
+<script>
+  // 2. echart 实例对象
+  const myChart = echarts.init(document.querySelector('div'))
+  // 3. echart 配置想
+  const nameArr = ['Jack', 'Louis', 'Owen', 'Mark', 'Tom', 'David']
+  const valArr = [88, 89, 66, 43, 45, 77]
+  const valArr2 = [64, 89, 50, 90, 21, 20]
+  const option = {
+    title: {
+      text: '12345'
+    },
+    toolbox: {  // echart功能扩展
+      feature: {
+        saveAsImage: {},  // 导出图片
+        dataView: {}, // 数据试图（导出源数据）
+        restore: {},  // 重置
+        dataZoom: {}, // 区域缩放
+        magicType: {
+          type: ['bar', 'line']
+        }
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: nameArr
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: 'Chinese',
+        type: 'line',
+        data: valArr,
+        barWidth: '30'
+      },
+      {
+        name: 'Math',
+        type: 'bar',
+        data: valArr2,
+        barWidth: '30'
+      }
+    ],
+    legend: {
+      data: ['Chinese', 'Math']
+    }
+  }
+  // 4. 设置给实例对象
+  myChart.setOption(option)
+</script>
+</body>
+</html>
