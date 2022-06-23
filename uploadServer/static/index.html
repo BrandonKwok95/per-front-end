@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="/utils/axios.min.js"></script>
+  <script src="/utils/qs.js"></script>
+  <script src="/utils/spark-md5.min.js"></script>
+  <script src="/js/instance.js"></script>
+
+  <style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .item {
+      width: 28vw;
+      min-width: 400px;
+      height: 200px;
+      margin: 10px;
+      padding: 1vw;
+      border: 1px #3072B6 dashed;
+    }
+    .item-header {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .item-box {
+      margin-top: 10px;
+    }
+    .item-box-tip {
+      font-size: 12px;
+      color: grey;
+    }
+    .item-box-upload {
+      margin-top: 10px;
+      display: flex;
+      user-select: none;
+    }
+    .item-box-upload p {
+      text-align: center;
+      font-size: 14px;
+      line-height: 30px;
+      cursor: pointer;
+    }
+
+    .item-box-upload .choose {
+      color: #fff;
+      background-color: #3072F6;
+      width: 100px;
+      height: 30px;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    .item-box-upload .holder {
+      display: none;
+    }
+    .item-box-upload .upload {
+      color: #fff;
+      background-color: #00AE66;
+      width: 100px;
+      height: 30px;
+      border-radius: 4px;
+    }
+    .item-box-upload .loading {
+      cursor: wait;
+      background-color: #eee;
+    }
+    .item-box-list .list-item {
+      font-size: 12px;
+      color: grey;
+    }
+    .item-box-list .list-item .delete {
+      color: red;
+      cursor: pointer;
+    }
+    .item-box-img {
+      width: 100px;
+      height: 80px;
+      display: none;
+    }
+    .item-box-progress {
+      width: 0;
+      height: 5px;
+      margin-top: 10px;
+      background-color: #3072F6;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="item">
+    <div class="item-header">
+      单一文件上传「FORM-DATA」
+    </div>
+    <div class="item-box" id="box1">
+      <div class="item-box-upload">
+        <p class="choose">选择文件</p>
+        <input type="file" class="holder" accept=".png, .jpg, .jpeg"/>
+        <p class="upload">上传服务器</p>
+      </div>
+      <div class="item-box-tip">只支持PNG/JPG/JPEG格式图片，且大小必须小于2MB</div>
+      <div class="item-box-list"></div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-header">
+      单一文件上传「BASE64」图片上传
+    </div>
+    <div class="item-box" id="box2">
+      <div class="item-box-upload">
+        <input type="file" class="holder" accept=".png, .jpg"/>
+        <p class="upload">上传图片</p>
+      </div>
+      <div class="item-box-tip">只能上传jpg/png格式图片，且必须去小于2MB</div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-header">
+      单一文件上传「缩略图处理」
+    </div>
+    <div class="item-box" id="box3">
+      <div class="item-box-upload">
+        <p class="choose">选择文件</p>
+        <input type="file" class="holder" accept=".png, .jpg, .jpeg"/>
+        <p class="upload">上传服务器</p>
+      </div>
+      <img class="item-box-img" src="" alt=""/>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-header">
+      单一文件上传「进度管理工具」
+    </div>
+    <div class="item-box" id="box4">
+      <div class="item-box-upload">
+        <p class="upload">上传服务器</p>
+        <input type="file" class="holder"/>
+      </div>
+      <div class="item-box-progress"></div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-header">
+      单次选中多文件上传
+    </div>
+    <div class="item-box" id="box5">
+      <div class="item-box-upload">
+        <p class="choose">选择文件</p>
+        <input type="file" class="holder" accept=".png, .jpg, .jpeg" multiple/>
+        <p class="upload">上传服务器</p>
+      </div>
+      <div class="item-box-list"></div>
+    </div>
+  </div>
+  <div class="item" id="box6">
+    <div class="item-header">
+      拖拽上传
+    </div>
+    <div class="item-box">
+      <div class="item-box-upload">
+        <input type="file" class="holder" accept=".png, .jpg, .jpeg" multiple/>
+      </div>
+      <div class="item-box-tip"></div>
+    </div>
+  </div>
+  <div class="item">
+    <div class="item-header">
+      大文件分段上传
+    </div>
+    <div class="item-box" id="box7">
+      <div class="item-box-upload">
+        <p class="upload">上传服务器</p>
+        <input type="file" class="holder"/>
+      </div>
+      <div class="item-box-tip"></div>
+    </div>
+  </div>
+</div>
+<script src="/js/index.js"></script>
+</body>
+</html>
